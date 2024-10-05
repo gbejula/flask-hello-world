@@ -1,0 +1,32 @@
+# ci integration for flask
+
+name: flask ci workflow
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Docker build
+              uses: docker/setup-buildx-action@v1
+
+            - name: Login to DockerHub
+              uses: docker/login-actions@v3
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Build and Push action
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                file: ./Dockerfile
+                push: true
+                tags: ${{ secrets.DOCKERHUB_USERNAME }}/flaskci:{{github.run_id}}
