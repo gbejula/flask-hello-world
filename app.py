@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Define a route for the homepage
 @app.route('/')
 def hello_world():
-    return 'Hello World by Gbenga!'
+    return 'Hello World by Olugbenga Ajayi using GitHub Actions ;)!'
 
 # Run the app
 if __name__ == '__main__':
